@@ -153,7 +153,8 @@ Script ini telah dipecah menjadi modul-modul fitur di folder `modules/`:
 
 Jalankan script tanpa argumen untuk masuk ke menu interaktif:
 
-```bash <(curl -s https://raw.githubusercontent.com/aldixyz331/ptero-manager/refs/heads/main/ptero.sh)
+```
+bash <(curl -s https://raw.githubusercontent.com/aldixyz331/ptero-manager/refs/heads/main/ptero.sh)
 ```
 
 ### Skenario umum
