@@ -153,7 +153,7 @@ Script ini telah dipecah menjadi modul-modul fitur di folder `modules/`:
 
 Jalankan script tanpa argumen untuk masuk ke menu interaktif:
 
-```bash <(curl -s https://raw.githubusercontent.com/aldixyz5/ptero-manager/refs/heads/main/ptero.sh)
+```bash <(curl -s https://raw.githubusercontent.com/aldixyz331/ptero-manager/refs/heads/main/ptero.sh)
 ```
 
 ### Skenario umum
@@ -418,7 +418,7 @@ Notifikasi dikirim untuk: backup sukses/gagal, install/update selesai, panel di-
 
 ## Disclaimer
 
-100% buatan AI kalo error fix sendiri. credit "replit.com"
+100% buatan AI kalo error fix sendiri. mau pakai atau ga terserah
 
 Script ini disediakan **as-is**, tanpa garansi. Selalu **backup dulu** sebelum operasi destructive (menu 1, 2, 13, 44, 58). Jalankan di server test dulu kalau belum yakin.
 
