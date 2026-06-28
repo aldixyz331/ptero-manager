@@ -1,0 +1,78 @@
+#!/bin/bash
+
+SCRIPT_VERSION="7.3.3"
+
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+
+DB_USER="pterodactyl"
+DB_NAME="panel"
+BACKUP_ROOT="/root/backup"
+PANEL_DIR="/var/www/pterodactyl"
+WINGS_DIR="/etc/pterodactyl"
+PHP_VERSION="8.3"
+LOG_FILE="/var/log/ptero-manager.log"
+BACKUP_RETENTION_DAYS=7
+BACKUP_MAX_COUNT=10
+BACKUP_MIN_DISK_GB=2
+BACKUP_COMPRESSION_LEVEL=6
+AUTO_BACKUP_BEFORE_UPDATE=1
+DISCORD_WEBHOOK=""
+MYSQL_ROOT_PASS=""
+DB_PASS=""
+PANEL_DOMAIN=""
+DEPLOY_MODE="tunnel"
+LE_EMAIL=""
+
+CONFIG_FILE="/root/.ptero-manager.conf"
+AUTO_BACKUP_SCRIPT="/usr/local/sbin/ptero-auto-backup.sh"
+AUTO_BACKUP_CNF="/etc/ptero-manager/db.cnf"
+SCRIPT_UPDATE_URL="${SCRIPT_UPDATE_URL:-}"
+LOCK_FILE="/var/run/ptero-manager.lock"
+TELEGRAM_BOT_TOKEN=""
+TELEGRAM_CHAT_ID=""
+CUSTOM_BANNER=""
+QUIET_MODE=0
+
+function load_config() {
+    if [ -f "$CONFIG_FILE" ]; then
+        . "$CONFIG_FILE" 2>/dev/null || true
+    fi
+}
+
+function save_config() {
+    [ "$(id -u)" -eq 0 ] || return 0
+    local _old_umask
+    _old_umask=$(umask)
+    umask 077
+    cat > "$CONFIG_FILE" <<CONF
+# Ptero Manager Config - jangan edit manual saat script jalan
+DB_USER="$DB_USER"
+DB_NAME="$DB_NAME"
+BACKUP_ROOT="$BACKUP_ROOT"
+PANEL_DIR="$PANEL_DIR"
+WINGS_DIR="$WINGS_DIR"
+PHP_VERSION="$PHP_VERSION"
+BACKUP_RETENTION_DAYS=$BACKUP_RETENTION_DAYS
+BACKUP_MAX_COUNT=$BACKUP_MAX_COUNT
+BACKUP_MIN_DISK_GB=$BACKUP_MIN_DISK_GB
+BACKUP_COMPRESSION_LEVEL=$BACKUP_COMPRESSION_LEVEL
+AUTO_BACKUP_BEFORE_UPDATE=$AUTO_BACKUP_BEFORE_UPDATE
+DISCORD_WEBHOOK="$DISCORD_WEBHOOK"
+SCRIPT_UPDATE_URL="$SCRIPT_UPDATE_URL"
+TELEGRAM_BOT_TOKEN="$TELEGRAM_BOT_TOKEN"
+TELEGRAM_CHAT_ID="$TELEGRAM_CHAT_ID"
+CUSTOM_BANNER="$CUSTOM_BANNER"
+PANEL_DOMAIN="$PANEL_DOMAIN"
+DEPLOY_MODE="$DEPLOY_MODE"
+LE_EMAIL="$LE_EMAIL"
+CONF
+    chmod 600 "$CONFIG_FILE"
+    umask "$_old_umask"
+}
+
+load_config
